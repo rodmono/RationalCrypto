@@ -1,13 +1,10 @@
 
 # Exchange Connection
 
-Contains the connection to the AWS services to retrieve the historical data.
-The data is automatically saved every 10 minutes to create the historical.
+ConnectBitso is a class to reach the exchange service. You can get historical data, get the current account and post orders.
 
 
 ## Usage
-
-Deploy using serverless framwework
 
 ```python
 # Get the last 30 minutes
@@ -19,6 +16,17 @@ print(tickers)
 tickers = ConnectBitso.fetch_by_epoch(ConnectBitso, 0, 1620433700)
 btc_mxn_ticker = BtcMxnTicker(tickers[0])
 print(tickers)
+
+# Create a new order
+order = SendOrder('1.0000', '500', 'buy', 'goodtillcancelled', 'limit', '')
+print(order.to_json())
+# Post the order to the exchange service
+new_order = ConnectBitso.post_order(ConnectBitso, order)
+print(new_order)
+
+# Gets the account balance
+balance = ConnectBitso.fetch_account_balance(ConnectBitso)
+print(balance)
 ```
 
 
