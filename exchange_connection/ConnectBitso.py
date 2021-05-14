@@ -32,13 +32,16 @@ class ConnectBitso:
 
     def post_order(self, order):
         response = requests.post(aws_url + '/post_order', json=order.to_json())
-        print(response)
-        order_response = response.content
-        return order_response
+        order_response = response.json()
+        return order_response['oid']
 
+    def cancel_order(self, oid):
+        response = requests.delete(aws_url + '/cancel_order/' + oid)
+        cancellation_response = response.content
+        return cancellation_response
 
 # Order to be sent to Bitso
-class SendOrder(object):
+class RawOrder(object):
     def __init__(self, btc_price, mxn_price, side, time_in_force, order_type, instrument):
         self.book = 'btc_mxn'  # Specifies which book to use ('btc_mxn' only)
         self.btc_price = btc_price  # BTC price
