@@ -27,6 +27,11 @@ print(new_order)
 # Gets the account balance
 balance = ConnectBitso.fetch_account_balance(ConnectBitso)
 print(balance)
+
+# Cancel order
+# The oid should be saved previously. It's returned by the post_order method
+cancellation = ConnectBitso.cancel_order(ConnectBitso, 'oid')
+print(cancellation)
 ```
 
 
